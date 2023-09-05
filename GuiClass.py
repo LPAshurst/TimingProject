@@ -8,7 +8,9 @@ import psutil
 values = []
 for i in psutil.process_iter():
     values.append(i.name())
-
+values.sort()
+valuesSet = set(values)
+sorted(valuesSet, key=str.lower)
 file_list_column = [
     [
         sg.Text("What excecutable would you like to track?"),
@@ -16,7 +18,7 @@ file_list_column = [
     ],
     [
         sg.Listbox(
-            values, enable_events=True, size=(40, 20), key="-String-"
+            valuesSet, enable_events=True, size=(40, 20), key="-String-"
         )
     ],
 ]
@@ -37,11 +39,19 @@ layout = [
     ]
 ]
 
-window = sg.Window("Image Viewer", layout)
+layout2 = [
+    [[sg.T("Ttab 2")]]
+]
+
+tabbedLayout = [[sg.TabGroup([[sg.Tab('Pick an executable to track', layout, tooltip='tip'), sg.Tab('Track progress', layout2)]], tooltip='TIP2')],    
+          [sg.Button('Read')]]    
+
+
+window = sg.Window("Image Viewer", tabbedLayout)
 
 # Run the Event Loop
 while True:
-    event, values = window.read()
+    event, valuesSet = window.read()
     if event == "Exit" or event == sg.WIN_CLOSED:
         break
     # Folder name was filled in, make a list of files in the folder
