@@ -1,5 +1,6 @@
 import time
 import psutil
+import GuiClass
 
 f = None
 try:
@@ -14,6 +15,10 @@ original_time = int(f.readline())
 open("time_tracker.txt", "w")
 start_time = 0  
 has_been_accessed = 0
+
+string = GuiClass.exe
+if len(string) != 0:
+    print (string)
 while True:
 
     time.sleep(.5)
